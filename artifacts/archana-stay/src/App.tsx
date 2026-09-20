@@ -59,15 +59,21 @@ const property: Property = {
   description:
     'A settled, well-managed stay for students and working professionals in Patna. Come for the clean rooms, stay for the everyday care.',
   features: [
-    'Attached washroom',
-    'Balcony',
-    'High-speed Wi-Fi',
-    'Hygienic food',
-    '24×7 security',
-    '24×7 water',
-    'Drinking RO water',
-    'Separate rooms',
-    'CCTV monitoring',
+    'WiFi',
+    'AC',
+    'Attached Bathroom',
+    'Individual Fresh air window',
+    'Individual Balcony',
+    'Hygenic Food',
+    'Washing Machine (if available)',
+    'Surveillance under CCTV',
+    'Security',
+    'Parking',
+    '24h water and drinking RO Water',
+    'Geyser (if available)',
+    'Refrigerator (if available)',
+    'Study Table',
+    'Chair',
   ],
 };
 
@@ -150,11 +156,15 @@ function SearchForm({ compact = false }: { compact?: boolean }) {
   const [, setLocation] = useLocation();
   const [query, setQuery] = useState('');
   const [stayType, setStayType] = useState('Any stay type');
+  const [minPrice, setMinPrice] = useState('7500');
+  const [maxPrice, setMaxPrice] = useState('11500');
   const submit = (event: FormEvent) => {
     event.preventDefault();
     const params = new URLSearchParams();
     if (query.trim()) params.set('search', query.trim());
     if (stayType !== 'Any stay type') params.set('type', stayType);
+    if (minPrice) params.set('minPrice', minPrice);
+    if (maxPrice) params.set('maxPrice', maxPrice);
     setLocation(`/listings${params.toString() ? `?${params.toString()}` : ''}`);
   };
   return (
@@ -183,6 +193,37 @@ function SearchForm({ compact = false }: { compact?: boolean }) {
               <option>Separate rooms</option>
             </select>
             <ChevronDown size={15} style={{ position: 'absolute', right: 12, top: 14, pointerEvents: 'none', color: 'hsl(var(--muted-foreground))' }} />
+          </div>
+        </div>
+        <div className="field budget-field">
+          <label htmlFor="search-min-price">Rent budget</label>
+          <div className="budget-inputs">
+            <div className="budget-input">
+              <span>Min ₹</span>
+              <input
+                id="search-min-price"
+                type="number"
+                min="0"
+                step="500"
+                value={minPrice}
+                onChange={(event) => setMinPrice(event.target.value)}
+                aria-label="Minimum monthly rent budget"
+                data-testid="input-min-price"
+              />
+            </div>
+            <div className="budget-input">
+              <span>Max ₹</span>
+              <input
+                id="search-max-price"
+                type="number"
+                min="0"
+                step="500"
+                value={maxPrice}
+                onChange={(event) => setMaxPrice(event.target.value)}
+                aria-label="Maximum monthly rent budget"
+                data-testid="input-max-price"
+              />
+            </div>
           </div>
         </div>
         <div className="field">
@@ -242,10 +283,10 @@ function PropertyCard({ compact = false }: { compact?: boolean }) {
           <MapPin size={14} /> {property.location}
         </div>
         <div className="property-meta">
-          <span className="meta-chip">Attached washroom</span>
-          <span className="meta-chip">Balcony</span>
-          <span className="meta-chip">Wi-Fi</span>
-          <span className="meta-chip">Food available</span>
+          <span className="meta-chip">WiFi</span>
+          <span className="meta-chip">AC</span>
+          <span className="meta-chip">Attached Bathroom</span>
+          <span className="meta-chip">Hygenic Food</span>
         </div>
         <div className="property-bottom">
           <div className="price-note" data-testid="text-contact-pricing">
@@ -382,6 +423,8 @@ function Listings() {
   const [sort, setSort] = useState('Recommended');
   const search = params.get('search') ?? '';
   const type = params.get('type') ?? '';
+  const minPrice = params.get('minPrice') ?? '7500';
+  const maxPrice = params.get('maxPrice') ?? '11500';
   const matches = property.name.toLowerCase().includes(search.toLowerCase()) ||
     property.location.toLowerCase().includes(search.toLowerCase()) ||
     'patna'.includes(search.toLowerCase());
@@ -412,6 +455,12 @@ function Listings() {
               </select>
             </div>
           </div>
+          {(params.has('minPrice') || params.has('maxPrice')) && (
+            <div className="budget-note" data-testid="text-budget-note">
+              <strong>Rent budget:</strong> ₹{Number(minPrice || 0).toLocaleString('en-IN')} – ₹{Number(maxPrice || 0).toLocaleString('en-IN')} per month.
+              <span> Pricing is shared by contact, so confirm the right room and availability with the owner.</span>
+            </div>
+          )}
           <div className="listing-grid">
             {filtered.length > 0 ? <PropertyCard /> : (
               <div className="empty-state" data-testid="empty-listings">
@@ -451,7 +500,7 @@ function PropertyDetail() {
               </div>
               <div className="feature-grid" data-testid="list-property-features">
                 {property.features.map((feature, index) => {
-                  const icons = [HomeIcon, Droplets, Wifi, Utensils, ShieldCheck, Droplets, Droplets, Building2, Eye];
+                  const icons = [Wifi, Sparkles, HomeIcon, Eye, Building2, Utensils, RotateCcw, Eye, ShieldCheck, CheckCircle2, Droplets, RotateCcw, Building2, BookOpen, CheckCircle2];
                   const Icon = icons[index] ?? CheckCircle2;
                   return <div className="feature" key={feature} data-testid={`feature-property-${index}`}><Icon size={15} /> {feature}</div>;
                 })}
