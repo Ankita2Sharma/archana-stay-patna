@@ -45,6 +45,8 @@ type Property = {
   name: string;
   location: string;
   type: string;
+  propertyTypes: string[];
+  roomTypes: string[];
   note: string;
   description: string;
   features: string[];
@@ -55,6 +57,8 @@ const property: Property = {
   name: 'S.K. Nagar PG & Rooms',
   location: 'S.K. Nagar, Patna',
   type: 'PG & private rooms',
+  propertyTypes: ['Shared Room'],
+  roomTypes: ['Single', 'Double Sharing'],
   note: 'Pricing shared by contact',
   description:
     'A settled, well-managed stay for students and working professionals in Patna. Come for the clean rooms, stay for the everyday care.',
@@ -153,16 +157,22 @@ function MobileContactBar() {
 }
 
 function SearchForm({ compact = false }: { compact?: boolean }) {
-  const [, setLocation] = useLocation();
-  const [query, setQuery] = useState('');
-  const [stayType, setStayType] = useState('Any stay type');
-  const [minPrice, setMinPrice] = useState('7500');
-  const [maxPrice, setMaxPrice] = useState('11500');
+  const [location, setLocation] = useLocation();
+  const initialParams = useMemo(
+    () => new URLSearchParams(typeof window !== 'undefined' ? window.location.search : location.split('?')[1] ?? ''),
+    [location],
+  );
+  const [query, setQuery] = useState(() => initialParams.get('search') ?? '');
+  const [propertyType, setPropertyType] = useState(() => initialParams.get('propertyType') ?? 'Any property type');
+  const [roomType, setRoomType] = useState(() => initialParams.get('roomType') ?? 'Any room type');
+  const [minPrice, setMinPrice] = useState(() => initialParams.get('minPrice') ?? '7500');
+  const [maxPrice, setMaxPrice] = useState(() => initialParams.get('maxPrice') ?? '11500');
   const submit = (event: FormEvent) => {
     event.preventDefault();
     const params = new URLSearchParams();
     if (query.trim()) params.set('search', query.trim());
-    if (stayType !== 'Any stay type') params.set('type', stayType);
+    if (propertyType !== 'Any property type') params.set('propertyType', propertyType);
+    if (roomType !== 'Any room type') params.set('roomType', roomType);
     if (minPrice) params.set('minPrice', minPrice);
     if (maxPrice) params.set('maxPrice', maxPrice);
     setLocation(`/listings${params.toString() ? `?${params.toString()}` : ''}`);
@@ -185,12 +195,23 @@ function SearchForm({ compact = false }: { compact?: boolean }) {
           </div>
         </div>
         <div className="field">
-          <label htmlFor="search-type">Looking for</label>
+          <label htmlFor="search-property-type">Property type</label>
           <div style={{ position: 'relative' }}>
-            <select id="search-type" value={stayType} onChange={(event) => setStayType(event.target.value)} data-testid="select-stay-type">
-              <option>Any stay type</option>
-              <option>PG & private rooms</option>
-              <option>Separate rooms</option>
+            <select id="search-property-type" value={propertyType} onChange={(event) => setPropertyType(event.target.value)} data-testid="select-property-type">
+              <option>Any property type</option>
+              <option>Shared Room</option>
+              <option>Hostel</option>
+            </select>
+            <ChevronDown size={15} style={{ position: 'absolute', right: 12, top: 14, pointerEvents: 'none', color: 'hsl(var(--muted-foreground))' }} />
+          </div>
+        </div>
+        <div className="field">
+          <label htmlFor="search-room-type">Room type</label>
+          <div style={{ position: 'relative' }}>
+            <select id="search-room-type" value={roomType} onChange={(event) => setRoomType(event.target.value)} data-testid="select-room-type">
+              <option>Any room type</option>
+              <option>Single</option>
+              <option>Double Sharing</option>
             </select>
             <ChevronDown size={15} style={{ position: 'absolute', right: 12, top: 14, pointerEvents: 'none', color: 'hsl(var(--muted-foreground))' }} />
           </div>
@@ -287,6 +308,8 @@ function PropertyCard({ compact = false }: { compact?: boolean }) {
           <span className="meta-chip">AC</span>
           <span className="meta-chip">Attached Bathroom</span>
           <span className="meta-chip">Hygenic Food</span>
+          <span className="meta-chip">Single</span>
+          <span className="meta-chip">Double Sharing</span>
         </div>
         <div className="property-bottom">
           <div className="price-note" data-testid="text-contact-pricing">
@@ -422,13 +445,16 @@ function Listings() {
   const params = useMemo(() => new URLSearchParams(location.split('?')[1] ?? ''), [location]);
   const [sort, setSort] = useState('Recommended');
   const search = params.get('search') ?? '';
-  const type = params.get('type') ?? '';
+  const propertyType = params.get('propertyType') ?? '';
+  const roomType = params.get('roomType') ?? '';
   const minPrice = params.get('minPrice') ?? '7500';
   const maxPrice = params.get('maxPrice') ?? '11500';
   const matches = property.name.toLowerCase().includes(search.toLowerCase()) ||
     property.location.toLowerCase().includes(search.toLowerCase()) ||
     'patna'.includes(search.toLowerCase());
-  const filtered = matches && (!type || property.type === type || type === 'Separate rooms') ? [property] : [];
+  const matchesPropertyType = !propertyType || property.propertyTypes.includes(propertyType);
+  const matchesRoomType = !roomType || property.roomTypes.includes(roomType);
+  const filtered = matches && matchesPropertyType && matchesRoomType ? [property] : [];
   if (sort === 'Alphabetical') filtered.sort((a, b) => a.name.localeCompare(b.name));
   const clearFilters = () => setLocation('/listings');
   return (
@@ -466,7 +492,7 @@ function Listings() {
               <div className="empty-state" data-testid="empty-listings">
                 <RotateCcw size={29} />
                 <h3>Let us look again.</h3>
-                <p>Nothing matched “{search || type}” yet. Try a broader search, or speak with us — we may know a room before it is listed.</p>
+                <p>Nothing matched “{search || propertyType || roomType}” yet. Try a broader search, or speak with us — we may know a room before it is listed.</p>
                 <button className="button button-primary" onClick={clearFilters} data-testid="button-clear-filters">
                   Show all stays <ArrowRight size={15} />
                 </button>

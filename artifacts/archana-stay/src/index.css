@@ -151,7 +151,7 @@ a { color: inherit; text-decoration: none; }
 .hero-note strong { display: block; margin-top: 5px; color: hsl(var(--primary)); font-family: var(--app-font-serif); font-size: 1.08rem; font-weight: 500; }
 
 .search-panel { margin-top: 8px; position: relative; z-index: 2; padding: 18px; background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: 18px; box-shadow: var(--shadow-soft); }
-.search-form { display: grid; grid-template-columns: 1.25fr .95fr 1.35fr .8fr auto; gap: 10px; align-items: end; }
+.search-form { display: grid; grid-template-columns: 1.35fr .95fr .95fr 1.35fr .8fr auto; gap: 10px; align-items: end; }
 .field { display: flex; flex-direction: column; gap: 7px; }
 .field label { font-size: .68rem; letter-spacing: .06em; text-transform: uppercase; font-weight: 700; color: hsl(var(--muted-foreground)); }
 .field input, .field select, .field textarea { width: 100%; border: 1px solid hsl(var(--border)); background: hsl(var(--background)); border-radius: 10px; padding: 12px 13px; color: hsl(var(--foreground)); outline: none; transition: border .2s ease, box-shadow .2s ease; }
