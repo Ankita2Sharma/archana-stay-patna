@@ -1,0 +1,1778 @@
+# Build a Professional PG & Room Rental Website for Patna, Bihar
+
+## ROLE
+
+Act as a senior full-stack developer, UI/UX designer, database architect, SEO specialist, and product designer.
+
+Build a complete, production-ready **PG and room rental marketplace website** inspired by the functionality and user experience of modern PG/property listing websites such as PGChoice.
+
+IMPORTANT:
+
+* Do NOT copy PGChoice's logo, branding, text, images, source code, or copyrighted design.
+* Use it only as inspiration for the general property-listing experience.
+* Create an original, modern, trustworthy design.
+* The website must work on desktop, tablet, and mobile.
+* Do not create only a static UI/mockup.
+* Build the actual functional application with frontend, backend, database, authentication, admin panel, search, filters, enquiry functionality, WhatsApp integration, and Google Maps.
+* Use clean, maintainable, production-quality code.
+
+---
+
+# 1. WEBSITE PURPOSE
+
+Create a website where users can:
+
+1. Search for PGs and rooms in Patna.
+2. Browse available properties.
+3. Filter properties according to their requirements.
+4. View detailed property information.
+5. See room types, pricing, amenities, photos, location, and availability.
+6. Contact the property owner through:
+
+   * WhatsApp
+   * Phone
+   * Enquiry form
+7. View the property location on Google Maps.
+8. Submit an enquiry.
+9. Save/favorite properties.
+10. Browse the website comfortably from a mobile phone.
+
+The website should initially focus on:
+
+**Patna, Bihar, India**
+
+but the architecture should allow adding other cities later.
+
+---
+
+# 2. WEBSITE BRAND
+
+Use a professional property-rental brand.
+
+Temporary brand name:
+
+**Archana Stay**
+
+Make the brand name easy to change later from the admin panel/configuration.
+
+Suggested tagline:
+
+**"Find Your Perfect PG & Room in Patna"**
+
+Design style:
+
+* Modern
+* Clean
+* Professional
+* Trustworthy
+* Premium but affordable
+* Property marketplace style
+* Mobile-first
+* Easy to navigate
+
+Avoid an overly complicated design.
+
+---
+
+# 3. TECH STACK
+
+Use a modern full-stack architecture.
+
+Preferred stack:
+
+Frontend:
+
+* React
+* TypeScript
+* Tailwind CSS
+* Modern component architecture
+
+Backend:
+
+* Node.js
+* Express or the most appropriate backend framework supported by Replit
+
+Database:
+
+* PostgreSQL
+
+ORM:
+
+* Prisma or another reliable PostgreSQL ORM
+
+Authentication:
+
+* Secure authentication system
+* Admin login
+* User authentication architecture that can be expanded later
+
+Icons:
+
+* Lucide React or another clean icon library
+
+Maps:
+
+* Google Maps JavaScript API / Google Maps Embed API
+
+Images:
+
+* Use a proper image storage mechanism
+* Do not store large image files directly inside the database
+
+Deployment:
+
+* Configure the project so it can be deployed through Replit.
+
+Use environment variables for:
+
+* DATABASE_URL
+* GOOGLE_MAPS_API_KEY
+* WHATSAPP_NUMBER
+* SESSION_SECRET
+* Any other API keys/secrets
+
+NEVER hard-code secret API keys in source code.
+
+---
+
+# 4. MAIN WEBSITE PAGES
+
+Create the following pages:
+
+## A. Homepage
+
+URL:
+
+/
+
+Sections:
+
+### Header
+
+Include:
+
+* Logo
+* Home
+* PGs
+* Rooms
+* Locations
+* About
+* Contact
+* Login/Admin
+* Mobile hamburger menu
+
+Header should remain clean and responsive.
+
+---
+
+## HERO SECTION
+
+Large attractive hero section.
+
+Headline:
+
+**Find Your Perfect PG & Room in Patna**
+
+Subtitle:
+
+**Comfortable rooms, verified properties, convenient locations and affordable prices.**
+
+Add a large search box.
+
+Search fields:
+
+* Location
+* Property type
+* Room type
+* Budget
+
+Example:
+
+Location:
+"Search area, locality or landmark"
+
+Property type:
+
+* PG
+* Private Room
+* Shared Room
+* Hostel
+
+Room type:
+
+* Single
+* Double Sharing
+
+
+Budget:
+
+* Min price : 7500
+* Max price : 11500
+
+Button:
+
+**Search**
+
+---
+
+# 5. POPULAR LOCATIONS
+
+Create a section showing popular Patna locations.
+
+Initially include examples such as:
+
+* S.K. Nagar
+
+Make locations data-driven so the admin can add/edit/delete locations.
+
+Each location should be clickable.
+
+Example:
+
+"PGs in Boring Road"
+
+When clicked:
+
+/pg?location=boring-road
+
+---
+
+# 6. FEATURED PROPERTIES
+
+Create a property card grid.
+
+Each card should contain:
+
+* Property image :
+* Property name : Archana Stay
+* Location :  Opposite to Ratan General Store  Road no 21,  Shri Krishna Nagar, PATNA 
+* Starting price : 7500
+* Room type: Sharing 
+* Available/Unavailable badge
+* Amenities: 
+WiFi
+AC
+ Attached Bathroom 
+ Individual Fresh air window 
+ Individual Balcony 
+ Hygenic Food
+ Washing Machine (if available)
+ Surveillance under CCTV
+Security
+ Parking
+ 24h water and drinking RO Water
+ Geyser (if available)
+ Refrigerator (if available)
+ Study Table 
+ Chair 
+* Rating/review count if available 
+* Verified badge if verified
+* Favorite heart icon
+* View Details button
+
+Example:
+
+---
+
+IMAGE
+
+Verified
+
+Comfort Stay PG
+
+Boring Road, Patna
+
+₹7,500/month onwards
+
+Single • Double Sharing
+
+✓ Wi-Fi
+✓ Food
+✓ Attached Bathroom
+
+[View Details]
+[WhatsApp]
+----------
+
+Make cards responsive.
+
+Desktop:
+3 or 4 cards per row.
+
+Tablet:
+2 cards.
+
+Mobile:
+1 card.
+
+---
+
+# 7. PROPERTY SEARCH PAGE
+
+Create:
+
+/pg
+
+This page should contain:
+
+### Search bar
+
+Location
+Property Type
+Room Type
+Budget
+
+### Filters
+
+Allow users to filter by:
+
+Location:
+
+* Locality
+* Area
+* Landmark
+
+Property type:
+
+* PG
+* Room
+* Hostel
+
+For:
+
+* Male
+
+Room type:
+
+* Single
+* Double
+
+Price:
+
+* Minimum
+* Maximum
+
+Amenities:
+
+* Wi-Fi
+* AC
+* Attached Bathroom
+* Balcony
+* Food
+* RO Water
+* Power Backup
+* Parking
+* Washing Machine
+* CCTV
+* Security
+* Housekeeping
+* Laundry
+
+Other:
+
+* Furnished
+* Semi-Furnished
+* Verified
+* Available Now
+
+Sorting:
+
+* Recommended
+* Price: Low to High
+* Price: High to Low
+* Newest
+* Most Popular
+
+Display:
+
+"24 properties found"
+
+Create pagination or infinite scrolling.
+
+---
+
+# 8. PROPERTY DETAIL PAGE
+
+URL:
+
+/pg/:slug
+
+Create a professional property detail page.
+
+Include:
+
+## Image Gallery
+
+Large main image.
+
+Thumbnail images underneath.
+
+Allow:
+
+* Image gallery
+* Full-screen image viewer
+* Previous/next controls
+
+---
+
+## PROPERTY INFORMATION
+
+Show:
+
+Property name
+
+Verified badge
+
+Location
+
+Rating
+
+Description
+
+Property type
+
+Suitable for:
+
+* Male
+* Female
+* Unisex
+
+---
+
+## PRICE
+
+Example:
+
+Starting from:
+
+₹7,500/month
+
+Clearly show:
+
+* Monthly rent
+* Security deposit
+* Maintenance
+* Electricity policy
+* Food charges
+* Other charges
+
+---
+
+# 9. ROOM OPTIONS
+
+Display available room types.
+
+Example:
+
+### Single Room
+
+₹10,000/month
+
+* 1 Person
+* Attached bathroom
+* Balcony
+* Wi-Fi
+
+[Enquire Now]
+
+### Double Sharing
+
+₹7,500/person/month
+
+* 2 People
+* Attached bathroom
+* Wi-Fi
+* Food available
+
+[Enquire Now]
+
+Room information must come from the database.
+
+---
+
+# 10. AMENITIES
+
+Display amenities using icons.
+
+Examples:
+
+* Wi-Fi
+* RO Water
+* Drinking Water
+* Food
+* Attached Bathroom
+* Balcony
+* AC
+* Power Backup
+* CCTV
+* Security
+* Parking
+* Washing Machine
+* Housekeeping
+* Refrigerator
+* Kitchen
+
+---
+
+# 11. GOOGLE MAPS
+
+Add a map section.
+
+Show:
+
+Property location
+
+Google Maps marker
+
+Address
+
+Nearby landmarks if available.
+
+Buttons:
+
+**Get Directions**
+
+and
+
+**Open in Google Maps**
+
+Use latitude/longitude stored in the database.
+
+Do not expose API keys in frontend code.
+
+If Google Maps API is not configured, provide a graceful fallback using a normal Google Maps link based on the property's address/coordinates.
+
+---
+
+# 12. CONTACT / ENQUIRY SECTION
+
+Create a prominent enquiry box.
+
+Fields:
+
+Name
+
+Phone number
+
+Email
+
+Preferred room type
+
+Expected move-in date
+
+Message
+
+Button:
+
+**Send Enquiry**
+
+Store enquiries in the database.
+
+Admin must be able to see all enquiries.
+
+---
+
+# 13. WHATSAPP INTEGRATION
+
+Add WhatsApp buttons throughout the website.
+
+Example:
+
+**Chat on WhatsApp**
+
+When clicked, open WhatsApp with a pre-filled message.
+
+Example message:
+
+"Hello, I am interested in Comfort Stay PG in Boring Road, Patna. Please share availability, rent and room details."
+
+Use the property name dynamically.
+
+Store the WhatsApp number in environment variables or admin configuration.
+
+Use:
+
+https://wa.me/
+
+Do not hard-code the owner's personal number throughout the application.
+
+---
+
+# 14. PHONE CONTACT
+
+Add:
+
+**Call Now**
+
+button.
+
+On mobile it should use:
+
+tel:
+
+On desktop it can display the number.
+
+The phone number should come from property/admin data.
+
+---
+
+# 15. OWNER / PROPERTY INFORMATION
+
+Each property should have:
+
+Property owner/contact name
+
+Phone number
+
+WhatsApp number
+
+Email
+
+Property address
+
+Location
+
+Latitude
+
+Longitude
+
+Verification status
+
+Example:
+
+Owner:
+
+Sanjay Kumar
+
+WhatsApp:
+
+7991144192
+
+Additional contact:
+
+Raju Bharti
+
+7654009789
+
+These details should be editable from the admin panel.
+
+---
+
+# 16. SPECIFIC INITIAL PROPERTY
+
+Create one initial property using the following information:
+
+Property:
+
+**S.K. Nagar PG & Rooms**
+
+Location:
+
+**S.K. Nagar, Patna, Bihar**
+
+Key message:
+
+**Single / Double-sharing room with attached washroom and attached balcony in S.K. Nagar, Patna. Clean spacious rooms, high-speed Wi-Fi, hygienic food, 24×7 security, 24×7 water and drinking RO water, separate rooms without disturbance, and CCTV.**
+
+Amenities:
+
+* Attached washroom
+* Attached balcony
+* High-speed Wi-Fi
+* Hygienic food
+* 24×7 security
+* 24×7 water
+* Drinking RO water
+* Separate rooms
+* CCTV
+
+Owner:
+
+**Sanjay Kumar**
+
+Phone:
+
+**7991144192**
+
+Additional contact:
+
+**Raju Bharti**
+
+Phone:
+
+**7654009789**
+
+Important:
+
+Do not display fake pricing.
+
+If price is not provided, show:
+
+**Contact for Price**
+
+Do not invent property availability.
+
+---
+
+# 17. ADMIN PANEL
+
+Create a secure admin dashboard.
+
+URL:
+
+/admin
+
+Admin login:
+
+/admin/login
+
+Do NOT create an insecure hard-coded public admin password.
+
+Use environment variables or secure authentication.
+
+---
+
+# 18. ADMIN DASHBOARD
+
+Dashboard should show:
+
+Total Properties
+
+Active Properties
+
+Available Rooms
+
+Total Enquiries
+
+New Enquiries
+
+Featured Properties
+
+Verified Properties
+
+Recent enquiries
+
+Recent properties
+
+---
+
+# 19. PROPERTY MANAGEMENT
+
+Admin should be able to:
+
+Create property
+
+Edit property
+
+Delete property
+
+Publish/unpublish property
+
+Mark property as featured
+
+Mark property as verified
+
+Mark property as available/unavailable
+
+Update pricing
+
+Update amenities
+
+Update owner information
+
+Update location
+
+Update Google Maps coordinates
+
+Upload/delete property images
+
+Manage room types
+
+---
+
+# 20. PROPERTY CREATION FORM
+
+Fields:
+
+Property Name
+
+Slug
+
+Description
+
+Property Type
+
+Gender Preference
+
+Address
+
+Locality
+
+City
+
+State
+
+PIN Code
+
+Latitude
+
+Longitude
+
+Owner Name
+
+Phone
+
+WhatsApp
+
+Email
+
+Verification status
+
+Featured status
+
+Availability
+
+Amenities
+
+House Rules
+
+Pricing
+
+Security Deposit
+
+Food Charges
+
+Electricity Charges
+
+Room Types
+
+Images
+
+---
+
+# 21. ROOM MANAGEMENT
+
+Admin should be able to create multiple room types per property.
+
+Fields:
+
+Room type
+
+Example:
+
+Single / Double Sharing / Triple Sharing
+
+Price
+
+Number of occupants
+
+Available rooms
+
+Total rooms
+
+Attached bathroom
+
+Balcony
+
+AC
+
+Furniture
+
+Description
+
+Availability
+
+---
+
+# 22. AMENITY MANAGEMENT
+
+Create reusable amenities.
+
+Admin can:
+
+Add amenity
+
+Edit amenity
+
+Delete amenity
+
+Assign amenities to properties.
+
+---
+
+# 23. LOCATION MANAGEMENT
+
+Admin can manage:
+
+Cities
+
+Areas
+
+Localities
+
+Landmarks
+
+Example:
+
+Patna
+
+→ Boring Road
+
+→ S.K. Nagar
+
+→ Kankarbagh
+
+→ Bailey Road
+
+etc.
+
+---
+
+# 24. ENQUIRY MANAGEMENT
+
+Admin should see:
+
+Name
+
+Phone
+
+Email
+
+Property
+
+Room type
+
+Move-in date
+
+Message
+
+Created date
+
+Status
+
+Statuses:
+
+* New
+* Contacted
+* Follow-up
+* Closed
+
+Admin should be able to update enquiry status.
+
+Add search/filter functionality.
+
+---
+
+# 25. DATABASE DESIGN
+
+Use PostgreSQL.
+
+Create appropriate tables/models.
+
+At minimum:
+
+User
+
+Property
+
+RoomType
+
+Amenity
+
+PropertyAmenity
+
+Location
+
+City
+
+Enquiry
+
+Favorite
+
+PropertyImage
+
+AdminSetting
+
+Review
+
+Create proper:
+
+* Primary keys
+* Foreign keys
+* Indexes
+* Unique constraints
+* Created timestamps
+* Updated timestamps
+
+Use normalized database design.
+
+Create migrations.
+
+Seed the database with the initial property and sample locations.
+
+Do NOT create fake customer reviews that appear genuine.
+
+If demonstration data is required, clearly label it as sample/demo data.
+
+---
+
+# 26. FAVORITES
+
+Allow users to save properties.
+
+Heart icon:
+
+♡
+
+When selected:
+
+♥
+
+Create a favorites system.
+
+If authentication is not implemented for normal users initially, use localStorage as a temporary guest favorite system, but design the architecture so authenticated favorites can be added later.
+
+---
+
+# 27. REVIEWS
+
+Create review architecture but do not populate fake reviews.
+
+Fields:
+
+Name
+
+Rating
+
+Comment
+
+Property
+
+Date
+
+Approval status
+
+Admin must approve reviews before they appear publicly.
+
+---
+
+# 28. SEO
+
+Make the website SEO-friendly.
+
+Each property should have:
+
+Dynamic title
+
+Dynamic meta description
+
+Clean URL slug
+
+Example:
+
+/pg/s-k-nagar-pg-rooms-patna
+
+Use:
+
+* Semantic HTML
+* Proper H1/H2 hierarchy
+* Meta descriptions
+* Open Graph metadata
+* Structured data where appropriate
+* Sitemap
+* robots.txt
+* Canonical URLs
+
+Create location-specific SEO pages where appropriate.
+
+Examples:
+
+/pg-in-patna
+
+/pg-in-boring-road-patna
+
+/pg-in-kankarbagh-patna
+
+/pg-in-s-k-nagar-patna
+
+---
+
+# 29. PERFORMANCE
+
+Optimize the website for:
+
+* Fast loading
+* Mobile performance
+* Lazy loading images
+* Responsive images
+* Efficient database queries
+* Pagination
+* Caching where appropriate
+
+Avoid unnecessarily large JavaScript bundles.
+
+---
+
+# 30. RESPONSIVE DESIGN
+
+The website must work perfectly on:
+
+Mobile:
+
+320px+
+
+Tablet:
+
+768px+
+
+Desktop:
+
+1024px+
+
+Large desktop:
+
+1440px+
+
+Pay special attention to mobile.
+
+On mobile:
+
+* Sticky bottom contact bar
+* Call button
+* WhatsApp button
+* Search should be easy to use
+* Filters should open in a drawer/modal
+* Property cards should remain readable
+* Images should not overflow
+
+---
+
+# 31. MOBILE BOTTOM BAR
+
+On property detail pages, create a sticky mobile bottom bar:
+
+[Call] [WhatsApp] [Enquire]
+
+This should remain accessible while scrolling.
+
+---
+
+# 32. SECURITY
+
+Implement:
+
+* Input validation
+* Server-side validation
+* Authentication
+* Authorization
+* Password hashing if passwords are used
+* Protected admin routes
+* SQL injection protection
+* XSS protection
+* CSRF protection where appropriate
+* Rate limiting on enquiry/contact endpoints
+* Secure HTTP headers
+* Environment variables for secrets
+
+Never expose:
+
+DATABASE_URL
+
+API keys
+
+Admin credentials
+
+SESSION_SECRET
+
+or other secrets to the frontend.
+
+---
+
+# 33. ERROR HANDLING
+
+Create friendly error pages:
+
+404
+
+500
+
+Network error
+
+Database error
+
+Empty search results
+
+Example:
+
+"No PGs found matching your filters."
+
+Provide:
+
+**Clear Filters**
+
+button.
+
+---
+
+# 34. LOADING STATES
+
+Use skeleton loaders for:
+
+* Property cards
+* Property details
+* Search results
+* Admin dashboard
+
+Avoid blank screens while loading.
+
+---
+
+# 35. ACCESSIBILITY
+
+Follow basic WCAG principles.
+
+Use:
+
+* Proper labels
+* Keyboard navigation
+* Alt text
+* Accessible buttons
+* Good contrast
+* Focus states
+* Semantic HTML
+
+---
+
+# 36. ADMIN SETTINGS
+
+Create settings for:
+
+Website name
+
+Logo
+
+Phone
+
+WhatsApp number
+
+Email
+
+Address
+
+Google Maps API configuration
+
+Social media links
+
+Footer content
+
+Default SEO title
+
+Default SEO description
+
+---
+
+# 37. FOOTER
+
+Create a professional footer.
+
+Sections:
+
+### Company
+
+About
+
+Contact
+
+Privacy Policy
+
+Terms & Conditions
+
+### PG Locations
+
+Patna
+
+Boring Road
+
+Kankarbagh
+
+S.K. Nagar
+
+Bailey Road
+
+### Contact
+
+Phone
+
+WhatsApp
+
+Email
+
+Address
+
+### Social
+
+Instagram
+
+Facebook
+
+YouTube
+
+---
+
+# 38. ABOUT PAGE
+
+Create:
+
+/about
+
+Explain the purpose of the platform.
+
+Example positioning:
+
+"StayNest Patna helps students, professionals and working individuals discover comfortable PGs and rooms across Patna."
+
+Do not make unsupported claims such as "100% verified" unless the verification system actually supports that claim.
+
+---
+
+# 39. CONTACT PAGE
+
+Create:
+
+/contact
+
+Include:
+
+Contact information
+
+Contact form
+
+WhatsApp button
+
+Call button
+
+Google Maps
+
+Business hours if configured
+
+---
+
+# 40. PRIVACY & TERMS
+
+Create basic pages:
+
+/privacy
+
+/terms
+
+Use placeholder legal text that clearly indicates it should be reviewed by a qualified legal professional before production use.
+
+---
+
+# 41. UI DESIGN
+
+Create a premium modern UI.
+
+Use:
+
+* White/light background
+* Professional accent color
+* Rounded cards
+* Soft shadows
+* Clear typography
+* Large property photos
+* Consistent spacing
+* Modern icons
+
+Avoid:
+
+* Excessive gradients
+* Flashy animations
+* Cluttered screens
+* Tiny fonts
+* Excessive colors
+
+Animations should be subtle.
+
+---
+
+# 42. SEARCH EXPERIENCE
+
+Search should update based on:
+
+Location
+
+Budget
+
+Room type
+
+Gender
+
+Amenities
+
+Property type
+
+Availability
+
+The URL should preserve search filters.
+
+Example:
+
+/pg?location=boring-road&room=single&maxPrice=10000
+
+This allows users to share search results.
+
+---
+
+# 43. GOOGLE MAP SEARCH
+
+Where practical, allow the admin to select or enter:
+
+Address
+
+Latitude
+
+Longitude
+
+Display a map preview in the admin panel.
+
+On the public property page:
+
+Show map
+
+Show address
+
+Show "Get Directions"
+
+---
+
+# 44. IMAGE MANAGEMENT
+
+Admin should be able to upload multiple images.
+
+Support:
+
+* Property cover image
+* Gallery images
+* Room images
+* Bathroom images
+* Balcony images
+* Common-area images
+
+Allow admin to:
+
+* Upload
+* Delete
+* Reorder
+* Select cover image
+
+Optimize images before serving where possible.
+
+---
+
+# 45. SAMPLE DATA
+
+Create only clearly marked demo/sample properties besides the real initial property.
+
+Do not create fake reviews.
+
+For demo properties, use:
+
+"Demo Property"
+
+or clearly identifiable sample data.
+
+---
+
+# 46. PROJECT STRUCTURE
+
+Organize the code professionally.
+
+Example:
+
+src/
+components/
+pages/
+layouts/
+hooks/
+services/
+utils/
+types/
+api/
+
+server/
+routes/
+controllers/
+services/
+middleware/
+
+prisma/
+schema.prisma
+seed.ts
+
+public/
+
+Keep frontend and backend responsibilities clean.
+
+---
+
+# 47. API DESIGN
+
+Create RESTful API endpoints or an equivalent clean API architecture.
+
+Examples:
+
+GET /api/properties
+
+GET /api/properties/:slug
+
+POST /api/properties
+
+PUT /api/properties/:id
+
+DELETE /api/properties/:id
+
+GET /api/locations
+
+GET /api/amenities
+
+POST /api/enquiries
+
+GET /api/admin/enquiries
+
+PUT /api/admin/enquiries/:id
+
+POST /api/admin/properties
+
+etc.
+
+Protect admin APIs.
+
+Validate all incoming data.
+
+---
+
+# 48. ADMIN SEARCH
+
+Admin should be able to search properties by:
+
+Property name
+
+Location
+
+Owner
+
+Phone
+
+Status
+
+Availability
+
+Verification
+
+---
+
+# 49. ANALYTICS-READY ARCHITECTURE
+
+Design the application so Google Analytics or another analytics platform can be added later.
+
+Trackable events should include:
+
+Property viewed
+
+WhatsApp clicked
+
+Phone clicked
+
+Enquiry submitted
+
+Search performed
+
+Favorite added
+
+Get Directions clicked
+
+Do not collect unnecessary personal information.
+
+---
+
+# 50. FINAL QUALITY CHECK
+
+Before considering the project complete, test:
+
+### Homepage
+
+* Navigation works
+* Search works
+* Property cards work
+* Location links work
+
+### Search
+
+* Filters work
+* Sorting works
+* Pagination works
+* URL query parameters work
+* Empty results work
+
+### Property
+
+* Gallery works
+* Room options work
+* Amenities display
+* Map works
+* WhatsApp works
+* Phone works
+* Enquiry works
+
+### Admin
+
+* Login works
+* Dashboard works
+* CRUD operations work
+* Image management works
+* Enquiries work
+* Property status works
+
+### Mobile
+
+Test all important pages on mobile width.
+
+### Database
+
+Verify:
+
+* Migrations work
+* Seed works
+* Relationships work
+* No orphaned records
+
+### Security
+
+Verify that:
+
+* Unauthenticated users cannot access admin pages
+* Admin APIs are protected
+* Secrets are not exposed
+* User input is validated
+
+---
+
+# 51. IMPORTANT DEVELOPMENT INSTRUCTION
+
+Do not try to build everything in one huge step if doing so risks broken functionality.
+
+Build in phases:
+
+## Phase 1
+
+Create:
+
+* Project setup
+* Database
+* Homepage
+* Navigation
+* Property cards
+* Property detail page
+* Responsive design
+
+## Phase 2
+
+Implement:
+
+* PostgreSQL
+* Property database
+* Room database
+* Amenities
+* Locations
+* Search
+* Filtering
+* Sorting
+
+## Phase 3
+
+Implement:
+
+* Admin authentication
+* Admin dashboard
+* Property CRUD
+* Room CRUD
+* Amenity management
+* Location management
+* Image management
+
+## Phase 4
+
+Implement:
+
+* Enquiries
+* WhatsApp
+* Phone
+* Google Maps
+* Favorites
+
+## Phase 5
+
+Implement:
+
+* SEO
+* Sitemap
+* Error handling
+* Security
+* Performance optimization
+* Accessibility
+
+## Phase 6
+
+Perform a complete end-to-end test.
+
+Fix all:
+
+* TypeScript errors
+* Build errors
+* Runtime errors
+* API errors
+* Database errors
+* Broken links
+* Mobile layout problems
+
+Do not stop after generating the UI.
+
+The final result must be a functioning full-stack application.
+
+---
+
+# 52. START NOW
+
+Start by creating the complete project.
+
+First:
+
+1. Set up the application.
+2. Create the database schema.
+3. Create the homepage.
+4. Create the property listing page.
+5. Create the property detail page.
+6. Add the initial S.K. Nagar property.
+7. Make the design responsive.
+8. Run the application.
+9. Fix any errors.
+10. Then continue implementing the remaining features.
+
+After each major phase, verify that the existing functionality still works.
+
+Do not remove working features when adding new ones.
+
+At the end, provide:
+
+1. A summary of the architecture.
+2. Database schema summary.
+3. Admin login setup instructions.
+4. Required environment variables.
+5. Google Maps API setup instructions.
+6. How to add/edit properties.
+7. How to deploy the website on Replit.
+8. Any remaining limitations or configuration steps.
+
+Build the application now.
+ 

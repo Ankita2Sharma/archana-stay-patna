@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Archana Stay"
+description = "A responsive PG and room rental marketplace for finding comfortable stays in Patna, with property discovery, room details, favourites, enquiry capture, and direct contact actions."
+version = "1.0.0"
+id = "artifacts/archana-stay"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25081
+
+[services.development]
+run = "pnpm --filter @workspace/archana-stay run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/archana-stay", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/archana-stay/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25081"
+BASE_PATH = "/"
