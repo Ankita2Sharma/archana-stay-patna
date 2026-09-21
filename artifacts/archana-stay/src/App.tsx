@@ -37,6 +37,7 @@ import NotFound from '@/pages/not-found';
 
 const queryClient = new QueryClient();
 const phone = '7991144192';
+const ownerAlternatePhone = '9504622099';
 const rajuPhone = '7654009789';
 const propertyImage = '/assets/property-poster.png';
 
@@ -47,6 +48,7 @@ type Property = {
   type: string;
   propertyTypes: string[];
   roomTypes: string[];
+  suitableFor: string[];
   note: string;
   description: string;
   features: string[];
@@ -59,6 +61,7 @@ const property: Property = {
   type: 'PG & private rooms',
   propertyTypes: ['Shared Room'],
   roomTypes: ['Single', 'Double Sharing'],
+  suitableFor: ['Students', 'Bachelor', 'Working Professionals'],
   note: 'Pricing shared by contact',
   description:
     'A settled, well-managed stay for students and working professionals in Patna. Come for the clean rooms, stay for the everyday care.',
@@ -310,6 +313,7 @@ function PropertyCard({ compact = false }: { compact?: boolean }) {
           <span className="meta-chip">Hygenic Food</span>
           <span className="meta-chip">Single</span>
           <span className="meta-chip">Double Sharing</span>
+          {property.suitableFor.map((audience) => <span className="meta-chip" key={audience}>{audience}</span>)}
         </div>
         <div className="property-bottom">
           <div className="price-note" data-testid="text-contact-pricing">
@@ -524,6 +528,12 @@ function PropertyDetail() {
                 <BadgeCheck size={18} />
                 <span><strong>Pricing and availability are shared by contact.</strong><br />Every room is different. Ask the owner what fits your move-in plans.</span>
               </div>
+              <div className="suitable-for" data-testid="list-suitable-for">
+                <strong>Suitable for</strong>
+                <div className="suitable-chips">
+                  {property.suitableFor.map((audience) => <span className="meta-chip" key={audience}>{audience}</span>)}
+                </div>
+              </div>
               <div className="feature-grid" data-testid="list-property-features">
                 {property.features.map((feature, index) => {
                   const icons = [Wifi, Sparkles, HomeIcon, Eye, Building2, Utensils, RotateCcw, Eye, ShieldCheck, CheckCircle2, Droplets, RotateCcw, Building2, BookOpen, CheckCircle2];
@@ -535,9 +545,10 @@ function PropertyDetail() {
                 <h3>Speak with the people here.</h3>
                 <div className="contact-person" data-testid="contact-owner-sanjay">
                   <div className="person-initial">SK</div>
-                  <div><strong>Sanjay Kumar</strong><span>Owner · best for room and pricing questions</span></div>
+                  <div><strong>Sanjay Kumar</strong><span>Owner · 7991144192 / 9504622099 · room and pricing questions</span></div>
                   <div className="person-actions">
                     <a className="icon-action" href={`tel:${phone}`} aria-label="Call Sanjay Kumar" data-testid="link-call-sanjay"><Phone size={15} /></a>
+                    <a className="icon-action" href={`tel:${ownerAlternatePhone}`} aria-label="Call Sanjay Kumar on alternate number" data-testid="link-call-sanjay-alternate"><Phone size={15} /></a>
                     <a className="icon-action" href={`https://wa.me/91${phone}`} target="_blank" rel="noreferrer" aria-label="WhatsApp Sanjay Kumar" data-testid="link-whatsapp-sanjay"><MessageCircle size={15} /></a>
                   </div>
                 </div>
@@ -622,6 +633,7 @@ function Contact() {
             <p className="section-lede">Tell us a little about your move. We will help you figure out the next useful step — whether that is a visit, a call, or a better question to ask.</p>
             <div className="contact-links">
               <a className="contact-link" href={`tel:${phone}`} data-testid="link-contact-sanjay"><span className="link-icon"><Phone size={16} /></span><span><strong>Sanjay Kumar</strong><br /><span className="muted">7991144192 · owner</span></span></a>
+              <a className="contact-link" href={`tel:${ownerAlternatePhone}`} data-testid="link-contact-owner-alternate"><span className="link-icon"><Phone size={16} /></span><span><strong>Sanjay Kumar</strong><br /><span className="muted">9504622099 · alternate owner number</span></span></a>
               <a className="contact-link" href={`tel:${rajuPhone}`} data-testid="link-contact-raju"><span className="link-icon"><Phone size={16} /></span><span><strong>Raju Bharti</strong><br /><span className="muted">7654009789 · additional contact</span></span></a>
               <a className="contact-link" href={`https://wa.me/91${phone}`} target="_blank" rel="noreferrer" data-testid="link-contact-whatsapp"><span className="link-icon"><MessageCircle size={16} /></span><span><strong>WhatsApp</strong><br /><span className="muted">A quick way to ask about a room</span></span></a>
             </div>
@@ -686,7 +698,7 @@ function PageShell({ children }: { children: ReactNode }) {
               <p>A calm, clear way to find your room in Patna — and the people who will help you settle in.</p>
             </div>
             <div><h4>Explore</h4><div className="footer-links"><Link href="/" data-testid="link-footer-home">Home</Link><Link href="/listings" data-testid="link-footer-listings">Find a stay</Link><Link href="/about" data-testid="link-footer-about">Our approach</Link></div></div>
-            <div><h4>Talk to us</h4><div className="footer-links"><a href={`tel:${phone}`} data-testid="link-footer-call">7991144192</a><Link href="/contact" data-testid="link-footer-contact">Send an enquiry</Link><Link href="/admin" data-testid="link-footer-admin">Admin preview</Link></div></div>
+            <div><h4>Talk to us</h4><div className="footer-links"><a href={`tel:${phone}`} data-testid="link-footer-call">7991144192</a><a href={`tel:${ownerAlternatePhone}`} data-testid="link-footer-owner-alternate">9504622099</a><Link href="/contact" data-testid="link-footer-contact">Send an enquiry</Link><Link href="/admin" data-testid="link-footer-admin">Admin preview</Link></div></div>
           </div>
           <div className="footer-bottom"><span>© 2025 Archana Stay · Patna</span><span>Details first. Human always.</span></div>
         </div>
