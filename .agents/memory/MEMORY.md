@@ -1,0 +1,1 @@
+- [Workspace design-system links](workspace-design-system-links.md) — after adding a local design-system dependency, a full pnpm install may be needed before TypeScript resolves its package exports.
