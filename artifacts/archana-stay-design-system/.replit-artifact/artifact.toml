@@ -1,0 +1,19 @@
+kind = "design-system"
+previewPath = "/archana-stay-design-system/"
+title = "Archana Stay Design System"
+description = "A calm, human-first visual system for Archana Stay's Patna PG and room rental experience."
+version = "1.0.0"
+id = "artifacts/archana-stay-design-system"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/archana-stay-design-system/" ]
+localPort = 20026
+
+[services.development]
+run = "pnpm --filter @workspace/archana-stay-design-system run dev"
+
+[services.env]
+PORT = "20026"
+BASE_PATH = "/archana-stay-design-system/"
