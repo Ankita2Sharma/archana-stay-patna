@@ -36,6 +36,8 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+.preview-site.log
+.vite/
 
 # System Files
 .DS_Store

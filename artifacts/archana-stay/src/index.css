@@ -83,16 +83,14 @@ a { color: inherit; text-decoration: none; }
 .hero-note strong { display: block; margin-top: 5px; color: hsl(var(--primary)); font-family: var(--app-font-serif); font-size: 1.08rem; font-weight: 500; }
 
 .search-panel { margin-top: 8px; position: relative; z-index: 2; padding: 18px; background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: 18px; box-shadow: var(--shadow-soft); }
-.search-form { display: grid; grid-template-columns: 1.35fr .95fr .95fr 1.35fr .8fr auto; gap: 10px; align-items: end; }
+.search-form { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr auto; gap: 10px; align-items: end; }
 .field { display: flex; flex-direction: column; gap: 7px; }
 .field label { font-size: .68rem; letter-spacing: .06em; text-transform: uppercase; font-weight: 700; color: hsl(var(--muted-foreground)); }
 .field input, .field select, .field textarea { width: 100%; border: 1px solid hsl(var(--border)); background: hsl(var(--background)); border-radius: 10px; padding: 12px 13px; color: hsl(var(--foreground)); outline: none; transition: border .2s ease, box-shadow .2s ease; }
+.field select { -webkit-appearance: none; -moz-appearance: none; appearance: none; padding-right: 36px; cursor: pointer; }
 .field input:focus, .field select:focus, .field textarea:focus { border-color: hsl(var(--accent)); box-shadow: 0 0 0 3px hsl(var(--accent) / .16); }
 .field textarea { resize: vertical; min-height: 115px; line-height: 1.5; }
-.budget-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
-.budget-input { position: relative; }
-.budget-input span { position: absolute; left: 11px; top: 13px; color: hsl(var(--muted-foreground)); font-size: .67rem; pointer-events: none; }
-.budget-input input { padding-left: 42px; min-width: 0; }
+.whatsapp-icon-img { width: 18px; height: 18px; border-radius: 50%; object-fit: cover; display: block; }
 
 .section { padding: 88px 0; }
 .section-tint { background: hsl(38 28% 92% / .52); }
@@ -131,7 +129,39 @@ a { color: inherit; text-decoration: none; }
 .property-story p { color: rgba(248,243,232,.7); line-height: 1.7; font-size: .9rem; max-width: 350px; }
 .story-list { list-style: none; padding: 10px 0 0; margin: 0; display: grid; gap: 14px; }
 .story-list li { display: flex; align-items: center; gap: 10px; color: rgba(248,243,232,.9); font-size: .84rem; }
-.story-list svg { color: hsl(var(--accent)); }
+.story-list svg { color: hsl(var(--accent)); flex-shrink: 0; }
+
+.featured-info-card {
+  margin: 18px 0 20px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(248, 243, 232, 0.2);
+  box-shadow: 0 10px 30px rgba(16, 30, 53, 0.25);
+}
+.featured-info-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.featured-info-card:hover .featured-info-image {
+  transform: scale(1.03);
+}
+.featured-info-suitability {
+  padding: 14px 16px;
+  background: hsl(var(--card));
+  color: hsl(var(--primary));
+  font-size: 0.86rem;
+  line-height: 1.45;
+  border-top: 2px solid hsl(var(--accent));
+}
+.featured-info-suitability strong {
+  display: block;
+  font-weight: 700;
+  color: hsl(var(--primary));
+}
 
 .principles { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: hsl(var(--border)); border: 1px solid hsl(var(--border)); }
 .principle { background: hsl(var(--card)); min-height: 200px; padding: 29px; }
@@ -240,7 +270,6 @@ a { color: inherit; text-decoration: none; }
   .detail-info { max-width: 680px; }
   .search-form { grid-template-columns: 1fr 1fr; }
   .search-form .button { min-height: 45px; }
-  .search-form .budget-field { grid-column: span 2; }
   .split-section, .contact-layout { gap: 35px; }
   .quote-grid { grid-template-columns: 1fr; gap: 10px; }
   .quote-mark { font-size: 5rem; }
@@ -258,7 +287,6 @@ a { color: inherit; text-decoration: none; }
   .hero-note { display: none; }
   .image-frame img { height: 390px; }
   .search-form { grid-template-columns: 1fr; }
-  .search-form .budget-field { grid-column: auto; }
   .section { padding: 64px 0; }
   .section-head { display: block; }
   .section-head .button { margin-top: 17px; }

@@ -39,7 +39,8 @@ const queryClient = new QueryClient();
 const phone = '7991144192';
 const ownerAlternatePhone = '9504622099';
 const rajuPhone = '7654009789';
-const propertyImage = '/assets/property-poster.png';
+const propertyImage = '/assets/d6e31053-42d1-48bf-a0f5-46f13277269b.png';
+const whatsappIcon = '/favicon icon whatsapp.jpg';
 
 type Property = {
   id: string;
@@ -61,10 +62,10 @@ const property: Property = {
   type: 'PG & private rooms',
   propertyTypes: ['Shared Room'],
   roomTypes: ['Single', 'Double Sharing'],
-  suitableFor: ['Students', 'Bachelor', 'Working Professionals'],
+  suitableFor: ['Students', 'Bachelor', 'Working Professionals', 'Special preference for employees'],
   note: 'Pricing shared by contact',
   description:
-    'A settled, well-managed stay for students and working professionals in Patna. Come for the clean rooms, stay for the everyday care.',
+    'Generously spacious, air-conditioned accommodations featuring private attached balconies with breezy open ventilation — a rare comfort in Patna. Thoughtfully managed with dedicated everyday care.',
   features: [
     'WiFi',
     'AC',
@@ -144,7 +145,7 @@ function MobileContactBar() {
   return (
     <div className="mobile-contact" data-testid="mobile-contact-bar">
       <a className="button button-ghost" href={`tel:${phone}`} data-testid="link-mobile-call">
-        <Phone size={15} /> Call Sanjay
+        <Phone size={15} /> Call us
       </a>
       <a
         className="button button-gold"
@@ -153,7 +154,7 @@ function MobileContactBar() {
         rel="noreferrer"
         data-testid="link-mobile-whatsapp"
       >
-        <MessageCircle size={15} /> WhatsApp
+        <img src={whatsappIcon} alt="WhatsApp" className="whatsapp-icon-img" style={{ width: 16, height: 16 }} /> WhatsApp
       </a>
     </div>
   );
@@ -168,16 +169,12 @@ function SearchForm({ compact = false }: { compact?: boolean }) {
   const [query, setQuery] = useState(() => initialParams.get('search') ?? '');
   const [propertyType, setPropertyType] = useState(() => initialParams.get('propertyType') ?? 'Any property type');
   const [roomType, setRoomType] = useState(() => initialParams.get('roomType') ?? 'Any room type');
-  const [minPrice, setMinPrice] = useState(() => initialParams.get('minPrice') ?? '7500');
-  const [maxPrice, setMaxPrice] = useState(() => initialParams.get('maxPrice') ?? '11500');
   const submit = (event: FormEvent) => {
     event.preventDefault();
     const params = new URLSearchParams();
     if (query.trim()) params.set('search', query.trim());
     if (propertyType !== 'Any property type') params.set('propertyType', propertyType);
     if (roomType !== 'Any room type') params.set('roomType', roomType);
-    if (minPrice) params.set('minPrice', minPrice);
-    if (maxPrice) params.set('maxPrice', maxPrice);
     setLocation(`/listings${params.toString() ? `?${params.toString()}` : ''}`);
   };
   return (
@@ -219,46 +216,16 @@ function SearchForm({ compact = false }: { compact?: boolean }) {
             <ChevronDown size={15} style={{ position: 'absolute', right: 12, top: 14, pointerEvents: 'none', color: 'hsl(var(--muted-foreground))' }} />
           </div>
         </div>
-        <div className="field budget-field">
-          <label htmlFor="search-min-price">Rent budget</label>
-          <div className="budget-inputs">
-            <div className="budget-input">
-              <span>Min ₹</span>
-              <input
-                id="search-min-price"
-                type="number"
-                min="0"
-                step="500"
-                value={minPrice}
-                onChange={(event) => setMinPrice(event.target.value)}
-                aria-label="Minimum monthly rent budget"
-                data-testid="input-min-price"
-              />
-            </div>
-            <div className="budget-input">
-              <span>Max ₹</span>
-              <input
-                id="search-max-price"
-                type="number"
-                min="0"
-                step="500"
-                value={maxPrice}
-                onChange={(event) => setMaxPrice(event.target.value)}
-                aria-label="Maximum monthly rent budget"
-                data-testid="input-max-price"
-              />
-            </div>
-          </div>
-        </div>
         <div className="field">
           <label htmlFor="search-timing">When?</label>
           <div style={{ position: 'relative' }}>
             <Clock3 size={16} style={{ position: 'absolute', left: 12, top: 13, color: 'hsl(var(--accent-foreground))' }} />
-            <select id="search-timing" defaultValue="I am flexible" style={{ paddingLeft: 35 }} data-testid="select-timing">
+            <select id="search-timing" defaultValue="I am flexible" style={{ paddingLeft: 35, paddingRight: 36 }} data-testid="select-timing">
               <option>I am flexible</option>
               <option>Moving soon</option>
               <option>Planning ahead</option>
             </select>
+            <ChevronDown size={15} style={{ position: 'absolute', right: 12, top: 14, pointerEvents: 'none', color: 'hsl(var(--muted-foreground))' }} />
           </div>
         </div>
         <button className="button button-primary" type="submit" data-testid="button-search-stays">
@@ -336,10 +303,10 @@ function Home() {
         <section className="hero">
           <div className="container hero-grid">
             <div className="reveal">
-              <div className="eyebrow">Patna stays, considered carefully</div>
-              <h1 data-testid="text-home-headline">Arrive at a place that already feels <em>settled.</em></h1>
+              <div className="eyebrow">A Rare Standard of Living in Patna</div>
+              <h1 data-testid="text-home-headline">Spacious rooms, attached balconies & cool AC <em>comfort.</em></h1>
               <p className="hero-intro" data-testid="text-home-intro">
-                Find a PG or room in Patna with the details you need, a real person to speak to, and the calm that comes from knowing what awaits you.
+                Step into generously spacious, air-conditioned accommodations designed for peaceful living. Enjoy your own private attached balcony with breezy open ventilation — a rare luxury in Patna — paired with attentive everyday care and the freedom to truly settle in.
               </p>
               <div className="hero-cta">
                 <Link className="button button-primary" href="/listings" data-testid="link-hero-find-stay">
@@ -352,8 +319,8 @@ function Home() {
             </div>
             <div className="hero-aside reveal delay-1">
               <div className="hero-note">
-                <span>Every listing includes</span>
-                <strong>A human hello.</strong>
+                <span>Rare in Patna</span>
+                <strong>Balcony & AC Rooms</strong>
               </div>
               <div className="image-frame">
                 <img src={propertyImage} alt="Archana Stay property in Patna" data-testid="img-home-property" />
@@ -361,9 +328,9 @@ function Home() {
                 <div className="image-caption">
                   <div>
                     <strong>S.K. Nagar, Patna</strong>
-                    <small>PG & private rooms · Owner managed</small>
+                    <small>Spacious AC rooms · Attached balcony & open ventilation</small>
                   </div>
-                  <span className="image-badge">Now welcoming enquiries</span>
+                  <span className="image-badge">Rare Patna Living</span>
                 </div>
               </div>
             </div>
@@ -373,11 +340,11 @@ function Home() {
           </div>
         </section>
 
-        <section className="section section-tint">
+        <section className="section section-tint" id="featured-property">
           <div className="container">
             <div className="section-head">
               <div>
-                <div className="eyebrow">One good place to begin</div>
+                <div className="eyebrow" data-testid="eyebrow-featured-property">FEATURED PROPERTY</div>
                 <h2>Clear enough to<br />choose with confidence.</h2>
               </div>
               <p className="section-lede">You should not have to decode a listing from a distance. Start with the details, then speak directly to the people who care for the place.</p>
@@ -385,13 +352,25 @@ function Home() {
             <div className="property-layout">
               <PropertyCard compact />
               <div className="property-story">
-                <div className="eyebrow" style={{ color: 'hsl(var(--accent))' }}>Featured in Patna</div>
+                <div className="eyebrow" style={{ color: 'hsl(var(--accent))' }}>FEATURED INFORMATION</div>
                 <h3>Good mornings begin with the right room.</h3>
+                <div className="featured-info-card">
+                  <img
+                    src={propertyImage}
+                    alt="Featured Information - S.K. Nagar PG & Rooms"
+                    className="featured-info-image"
+                    data-testid="img-featured-info"
+                  />
+                  <div className="featured-info-suitability">
+                    <strong>Suitable for Student, bachelor, working professional, Special preference for employees</strong>
+                  </div>
+                </div>
                 <p>{property.description}</p>
                 <ul className="story-list">
-                  <li><BadgeCheck size={16} /> Details you can actually use</li>
-                  <li><Phone size={16} /> Direct owner contact</li>
-                  <li><ShieldCheck size={16} /> A stay managed with care</li>
+                  <li><BadgeCheck size={16} /> Attached private balcony & open ventilation</li>
+                  <li><BadgeCheck size={16} /> Spacious air-conditioned accommodations</li>
+                  <li><Phone size={16} /> Direct contact without middleman fees</li>
+                  <li><ShieldCheck size={16} /> High hygiene standards & 24/7 security</li>
                 </ul>
                 <Link className="button button-gold" href="/property/sk-nagar-pg" style={{ marginTop: 28 }} data-testid="link-featured-property">
                   See the full property <ArrowRight size={15} />
@@ -451,8 +430,6 @@ function Listings() {
   const search = params.get('search') ?? '';
   const propertyType = params.get('propertyType') ?? '';
   const roomType = params.get('roomType') ?? '';
-  const minPrice = params.get('minPrice') ?? '7500';
-  const maxPrice = params.get('maxPrice') ?? '11500';
   const matches = property.name.toLowerCase().includes(search.toLowerCase()) ||
     property.location.toLowerCase().includes(search.toLowerCase()) ||
     'patna'.includes(search.toLowerCase());
@@ -485,12 +462,6 @@ function Listings() {
               </select>
             </div>
           </div>
-          {(params.has('minPrice') || params.has('maxPrice')) && (
-            <div className="budget-note" data-testid="text-budget-note">
-              <strong>Rent budget:</strong> ₹{Number(minPrice || 0).toLocaleString('en-IN')} – ₹{Number(maxPrice || 0).toLocaleString('en-IN')} per month.
-              <span> Pricing is shared by contact, so confirm the right room and availability with the owner.</span>
-            </div>
-          )}
           <div className="listing-grid">
             {filtered.length > 0 ? <PropertyCard /> : (
               <div className="empty-state" data-testid="empty-listings">
@@ -542,21 +513,23 @@ function PropertyDetail() {
                 })}
               </div>
               <div className="contact-card">
-                <h3>Speak with the people here.</h3>
-                <div className="contact-person" data-testid="contact-owner-sanjay">
-                  <div className="person-initial">SK</div>
-                  <div><strong>Sanjay Kumar</strong><span>Owner · 7991144192 / 9504622099 · room and pricing questions</span></div>
+                <h3>Speak with us directly.</h3>
+                <div className="contact-person" data-testid="contact-primary-phone">
+                  <div className="person-initial"><Phone size={16} /></div>
+                  <div><strong>Primary Contact</strong><span>7991144192 / 9504622099 · Room & pricing enquiries</span></div>
                   <div className="person-actions">
-                    <a className="icon-action" href={`tel:${phone}`} aria-label="Call Sanjay Kumar" data-testid="link-call-sanjay"><Phone size={15} /></a>
-                    <a className="icon-action" href={`tel:${ownerAlternatePhone}`} aria-label="Call Sanjay Kumar on alternate number" data-testid="link-call-sanjay-alternate"><Phone size={15} /></a>
-                    <a className="icon-action" href={`https://wa.me/91${phone}`} target="_blank" rel="noreferrer" aria-label="WhatsApp Sanjay Kumar" data-testid="link-whatsapp-sanjay"><MessageCircle size={15} /></a>
+                    <a className="icon-action" href={`tel:${phone}`} aria-label="Call primary contact" data-testid="link-call-primary"><Phone size={15} /></a>
+                    <a className="icon-action" href={`tel:${ownerAlternatePhone}`} aria-label="Call alternate contact" data-testid="link-call-alternate"><Phone size={15} /></a>
+                    <a className="icon-action" href={`https://wa.me/91${phone}`} target="_blank" rel="noreferrer" aria-label="WhatsApp enquiries" data-testid="link-whatsapp-enquiry">
+                      <img src={whatsappIcon} alt="WhatsApp" className="whatsapp-icon-img" />
+                    </a>
                   </div>
                 </div>
-                <div className="contact-person" data-testid="contact-helper-raju">
-                  <div className="person-initial">RB</div>
-                  <div><strong>Raju Bharti</strong><span>Additional contact · 7654009789</span></div>
+                <div className="contact-person" data-testid="contact-additional-phone">
+                  <div className="person-initial"><Phone size={16} /></div>
+                  <div><strong>Helpdesk & Enquiries</strong><span>Additional contact · 7654009789</span></div>
                   <div className="person-actions">
-                    <a className="icon-action" href={`tel:${rajuPhone}`} aria-label="Call Raju Bharti" data-testid="link-call-raju"><Phone size={15} /></a>
+                    <a className="icon-action" href={`tel:${rajuPhone}`} aria-label="Call helpdesk" data-testid="link-call-helpdesk"><Phone size={15} /></a>
                   </div>
                 </div>
                 <Link className="button button-primary" href="/contact" style={{ width: '100%', marginTop: 13 }} data-testid="link-detail-enquiry">
@@ -632,17 +605,17 @@ function Contact() {
             <h1 data-testid="text-contact-title">One good question can change the search.</h1>
             <p className="section-lede">Tell us a little about your move. We will help you figure out the next useful step — whether that is a visit, a call, or a better question to ask.</p>
             <div className="contact-links">
-              <a className="contact-link" href={`tel:${phone}`} data-testid="link-contact-sanjay"><span className="link-icon"><Phone size={16} /></span><span><strong>Sanjay Kumar</strong><br /><span className="muted">7991144192 · owner</span></span></a>
-              <a className="contact-link" href={`tel:${ownerAlternatePhone}`} data-testid="link-contact-owner-alternate"><span className="link-icon"><Phone size={16} /></span><span><strong>Sanjay Kumar</strong><br /><span className="muted">9504622099 · alternate owner number</span></span></a>
-              <a className="contact-link" href={`tel:${rajuPhone}`} data-testid="link-contact-raju"><span className="link-icon"><Phone size={16} /></span><span><strong>Raju Bharti</strong><br /><span className="muted">7654009789 · additional contact</span></span></a>
-              <a className="contact-link" href={`https://wa.me/91${phone}`} target="_blank" rel="noreferrer" data-testid="link-contact-whatsapp"><span className="link-icon"><MessageCircle size={16} /></span><span><strong>WhatsApp</strong><br /><span className="muted">A quick way to ask about a room</span></span></a>
+              <a className="contact-link" href={`tel:${phone}`} data-testid="link-contact-primary"><span className="link-icon"><Phone size={16} /></span><span><strong>Primary Phone</strong><br /><span className="muted">7991144192 · Calls & enquiries</span></span></a>
+              <a className="contact-link" href={`tel:${ownerAlternatePhone}`} data-testid="link-contact-alternate"><span className="link-icon"><Phone size={16} /></span><span><strong>Alternate Phone</strong><br /><span className="muted">9504622099 · Direct line</span></span></a>
+              <a className="contact-link" href={`tel:${rajuPhone}`} data-testid="link-contact-helpdesk"><span className="link-icon"><Phone size={16} /></span><span><strong>Helpdesk / Support</strong><br /><span className="muted">7654009789 · Additional contact</span></span></a>
+              <a className="contact-link" href={`https://wa.me/91${phone}`} target="_blank" rel="noreferrer" data-testid="link-contact-whatsapp"><span className="link-icon"><img src={whatsappIcon} alt="WhatsApp" className="whatsapp-icon-img" /></span><span><strong>WhatsApp</strong><br /><span className="muted">A quick way to ask about a room</span></span></a>
             </div>
           </div>
           <div className="enquiry-card">
             <h2>Send an enquiry</h2>
             <p>We will use your details only to reply to this enquiry.</p>
             {sent ? (
-              <div className="form-success" data-testid="status-enquiry-success"><CheckCircle2 size={18} style={{ verticalAlign: 'middle', marginRight: 6 }} /> Thanks — your enquiry is noted. Please call Sanjay on 7991144192 if your move is time-sensitive.</div>
+              <div className="form-success" data-testid="status-enquiry-success"><CheckCircle2 size={18} style={{ verticalAlign: 'middle', marginRight: 6 }} /> Thanks — your enquiry is noted. Please call 7991144192 if your move is time-sensitive.</div>
             ) : (
               <form onSubmit={submit} className="form-grid">
                 <div className="field"><label htmlFor="name">Your name</label><input id="name" required placeholder="How should we call you?" data-testid="input-enquiry-name" /></div>
@@ -676,7 +649,7 @@ function AdminPreview() {
             <div className="admin-row header"><span>Property</span><span>Signal</span><span>Next step</span><span>Open</span></div>
             <div className="admin-row"><strong>S.K. Nagar PG & Rooms</strong><span><span className="tag">New enquiry</span></span><span className="muted">Reply by phone</span><Link href="/contact" data-testid="link-admin-enquiry-1"><ArrowRight size={15} /></Link></div>
             <div className="admin-row"><strong>S.K. Nagar PG & Rooms</strong><span><span className="tag">Saved stay</span></span><span className="muted">Keep details fresh</span><Link href="/property/sk-nagar-pg" data-testid="link-admin-enquiry-2"><ArrowRight size={15} /></Link></div>
-            <div className="admin-row"><strong>Owner profile</strong><span><span className="tag">Contact ready</span></span><span className="muted">7991144192</span><Link href="/contact" data-testid="link-admin-enquiry-3"><ArrowRight size={15} /></Link></div>
+            <div className="admin-row"><strong>Contact line</strong><span><span className="tag">Contact ready</span></span><span className="muted">7991144192</span><Link href="/contact" data-testid="link-admin-enquiry-3"><ArrowRight size={15} /></Link></div>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 9, marginTop: 18, color: 'hsl(var(--muted-foreground))', fontSize: '.76rem' }} data-testid="text-admin-note"><BarChart3 size={15} /> Preview mode: connect your enquiry inbox when the backend is ready.</div>
         </div>
