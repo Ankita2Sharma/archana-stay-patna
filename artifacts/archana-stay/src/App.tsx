@@ -3,7 +3,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import {
   ArrowLeft,
   ArrowRight,
-  BarChart3,
   BadgeCheck,
   BookOpen,
   Building2,
@@ -72,10 +71,6 @@ const pageMetadata: Record<string, { title: string; description: string }> = {
     description:
       'Contact Archana Stay about PG rooms in Patna. Call or WhatsApp to ask about room types, rent, availability and visiting S.K. Nagar.',
   },
-  '/admin': {
-    title: 'Private Admin Preview | Archana Stay',
-    description: 'Private administration preview for Archana Stay.',
-  },
 };
 
 function setMeta(selector: string, attribute: 'name' | 'property', key: string, content: string) {
@@ -98,7 +93,7 @@ function SEOHead() {
     const description = page?.description ?? 'The requested Archana Stay page could not be found.';
     const canonicalUrl = `${window.location.origin}${pathname}`;
     const imageUrl = new URL('/assets/property-poster.png', window.location.origin).href;
-    const robots = pathname === '/admin' || !page ? 'noindex, nofollow' : 'index, follow';
+    const robots = !page ? 'noindex, nofollow' : 'index, follow';
 
     document.title = title;
     setMeta('meta[name="description"]', 'name', 'description', description);
@@ -720,10 +715,14 @@ function About() {
 }
 
 function Contact() {
-  const [sent, setSent] = useState(false);
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setSent(true);
+    const form = new FormData(event.currentTarget);
+    const name = String(form.get('name') ?? '').trim();
+    const contactNumber = String(form.get('phone') ?? '').trim();
+    const message = String(form.get('move') ?? '').trim();
+    const text = `Hello Archana Stay, I am ${name}. My phone number is ${contactNumber}. ${message}`;
+    window.location.assign(`https://wa.me/91${phone}?text=${encodeURIComponent(text)}`);
   };
   return (
     <PageShell>
@@ -742,45 +741,14 @@ function Contact() {
           </div>
           <div className="enquiry-card">
             <h2>Send an enquiry</h2>
-            <p>We will use your details only to reply to this enquiry.</p>
-            {sent ? (
-              <div className="form-success" data-testid="status-enquiry-success"><CheckCircle2 size={18} style={{ verticalAlign: 'middle', marginRight: 6 }} /> Thanks — your enquiry is noted. Please call 7991144192 if your move is time-sensitive.</div>
-            ) : (
-              <form onSubmit={submit} className="form-grid">
-                <div className="field"><label htmlFor="name">Your name</label><input id="name" required placeholder="How should we call you?" data-testid="input-enquiry-name" /></div>
-                <div className="field"><label htmlFor="phone">Phone number</label><input id="phone" required type="tel" placeholder="A number we can reach" data-testid="input-enquiry-phone" /></div>
-                <div className="field form-full"><label htmlFor="move">Tell us about your move</label><textarea id="move" required placeholder="When are you moving, and what kind of room are you looking for?" data-testid="input-enquiry-message" /></div>
-                <div className="form-full"><button className="button button-primary" type="submit" data-testid="button-submit-enquiry">Send my enquiry <Send size={15} /></button></div>
-              </form>
-            )}
+            <p>Your message will open in WhatsApp for you to send.</p>
+            <form onSubmit={submit} className="form-grid">
+              <div className="field"><label htmlFor="name">Your name</label><input id="name" name="name" required placeholder="How should we call you?" data-testid="input-enquiry-name" /></div>
+              <div className="field"><label htmlFor="phone">Phone number</label><input id="phone" name="phone" required type="tel" placeholder="A number we can reach" data-testid="input-enquiry-phone" /></div>
+              <div className="field form-full"><label htmlFor="move">Tell us about your move</label><textarea id="move" name="move" required placeholder="When are you moving, and what kind of room are you looking for?" data-testid="input-enquiry-message" /></div>
+              <div className="form-full"><button className="button button-primary" type="submit" data-testid="button-submit-enquiry">Continue in WhatsApp <Send size={15} /></button></div>
+            </form>
           </div>
-        </div>
-      </main>
-    </PageShell>
-  );
-}
-
-function AdminPreview() {
-  return (
-    <PageShell>
-      <main className="section">
-        <div className="container">
-          <div className="admin-head">
-            <div><div className="eyebrow">Private preview</div><h1 style={{ margin: '12px 0 0', font: '500 clamp(2.5rem, 5vw, 4.3rem)/.95 var(--app-font-serif)', color: 'hsl(var(--primary))', letterSpacing: '-.06em' }} data-testid="text-admin-title">A clear view<br />of your stay.</h1></div>
-            <Link className="button button-ghost button-small" href="/property/sk-nagar-pg" data-testid="link-admin-view-live"><Eye size={15} /> View live listing</Link>
-          </div>
-          <div className="admin-kpis">
-            <div className="kpi" data-testid="kpi-enquiries"><span>Enquiries this week</span><strong>06</strong></div>
-            <div className="kpi" data-testid="kpi-saves"><span>Saved by visitors</span><strong>14</strong></div>
-            <div className="kpi" data-testid="kpi-response"><span>Response focus</span><strong>Today</strong></div>
-          </div>
-          <div className="admin-table" data-testid="admin-enquiry-table">
-            <div className="admin-row header"><span>Property</span><span>Signal</span><span>Next step</span><span>Open</span></div>
-            <div className="admin-row"><strong>S.K. Nagar PG & Rooms</strong><span><span className="tag">New enquiry</span></span><span className="muted">Reply by phone</span><Link href="/contact" data-testid="link-admin-enquiry-1"><ArrowRight size={15} /></Link></div>
-            <div className="admin-row"><strong>S.K. Nagar PG & Rooms</strong><span><span className="tag">Saved stay</span></span><span className="muted">Keep details fresh</span><Link href="/property/sk-nagar-pg" data-testid="link-admin-enquiry-2"><ArrowRight size={15} /></Link></div>
-            <div className="admin-row"><strong>Contact line</strong><span><span className="tag">Contact ready</span></span><span className="muted">7991144192</span><Link href="/contact" data-testid="link-admin-enquiry-3"><ArrowRight size={15} /></Link></div>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 9, marginTop: 18, color: 'hsl(var(--muted-foreground))', fontSize: '.76rem' }} data-testid="text-admin-note"><BarChart3 size={15} /> Preview mode: connect your enquiry inbox when the backend is ready.</div>
         </div>
       </main>
     </PageShell>
@@ -800,7 +768,7 @@ function PageShell({ children }: { children: ReactNode }) {
               <p>A calm, clear way to find your room in Patna — and the people who will help you settle in.</p>
             </div>
             <div><h4>Explore</h4><div className="footer-links"><Link href="/" data-testid="link-footer-home">Home</Link><Link href="/listings" data-testid="link-footer-listings">Find a stay</Link><Link href="/about" data-testid="link-footer-about">Our approach</Link></div></div>
-            <div><h4>Talk to us</h4><div className="footer-links"><a href={`tel:${phone}`} data-testid="link-footer-call">7991144192</a><a href={`tel:${ownerAlternatePhone}`} data-testid="link-footer-owner-alternate">9504622099</a><Link href="/contact" data-testid="link-footer-contact">Send an enquiry</Link><Link href="/admin" data-testid="link-footer-admin">Admin preview</Link></div></div>
+            <div><h4>Talk to us</h4><div className="footer-links"><a href={`tel:${phone}`} data-testid="link-footer-call">7991144192</a><a href={`tel:${ownerAlternatePhone}`} data-testid="link-footer-owner-alternate">9504622099</a><Link href="/contact" data-testid="link-footer-contact">Send an enquiry</Link></div></div>
           </div>
           <div className="footer-bottom"><span>© 2025 Archana Stay · Patna</span><span>Details first. Human always.</span></div>
         </div>
@@ -824,7 +792,6 @@ function Router() {
         <Route path="/property/sk-nagar-pg" component={PropertyDetail} />
         <Route path="/about" component={About} />
         <Route path="/contact" component={Contact} />
-        <Route path="/admin" component={AdminPreview} />
         <Route component={NotFound} />
       </Switch>
     </RoutedErrorBoundary>
