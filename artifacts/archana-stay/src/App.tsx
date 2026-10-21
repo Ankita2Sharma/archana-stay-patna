@@ -411,13 +411,8 @@ function Home() {
               </div>
             </div>
             <div className="hero-aside reveal delay-1">
-              <div className="hero-note">
-                <span>Rare in Patna</span>
-                <strong>Balcony & AC Rooms</strong>
-              </div>
               <div className="image-frame">
-                <img src={propertyImage} alt="Archana Stay property in Patna" data-testid="img-home-property" />
-                <div className="image-wash" />
+                <img src={propertyImage} alt="Archana Stay property poster in Patna" width="1024" height="1536" data-testid="img-home-property" />
                 <div className="image-caption">
                   <div>
                     <strong>S.K. Nagar, Patna</strong>
