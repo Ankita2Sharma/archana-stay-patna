@@ -1,4 +1,4 @@
-import { type FormEvent, type ReactNode, useMemo, useState } from 'react';
+import { type FormEvent, type ReactNode, useEffect, useMemo, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import {
   ArrowLeft,
@@ -41,6 +41,104 @@ const ownerAlternatePhone = '9504622099';
 const rajuPhone = '7654009789';
 const propertyImage = '/assets/d6e31053-42d1-48bf-a0f5-46f13277269b.png';
 const whatsappIcon = '/favicon icon whatsapp.jpg';
+const locationCoordinates = '25.6156875,85.1286875';
+const locationLabel = 'J48H+7F, Patna, Bihar';
+const mapEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(locationCoordinates)}&z=17&output=embed`;
+const mapDirectionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(locationCoordinates)}&travelmode=driving`;
+
+const pageMetadata: Record<string, { title: string; description: string }> = {
+  '/': {
+    title: 'PG in Patna, S.K. Nagar | Archana Stay',
+    description:
+      'Looking for a PG in Patna? Explore spacious AC single and double-sharing rooms in S.K. Nagar, with attached balconies, Wi-Fi and direct owner contact.',
+  },
+  '/listings': {
+    title: 'PG Rooms & Stays in Patna | Archana Stay',
+    description:
+      'Browse paying guest rooms in Patna, including single and double-sharing options in S.K. Nagar. Contact Archana Stay directly for current rent and availability.',
+  },
+  '/property/sk-nagar-pg': {
+    title: 'S.K. Nagar PG Rooms in Patna | Archana Stay',
+    description:
+      'Explore S.K. Nagar PG and private rooms in Patna with air conditioning, attached balconies and room details. Call Archana Stay to ask about rent and availability.',
+  },
+  '/about': {
+    title: 'About Archana Stay | PG Accommodation in Patna',
+    description:
+      'Learn how Archana Stay helps students and working professionals explore PG accommodation in Patna with clear details and direct contact.',
+  },
+  '/contact': {
+    title: 'Contact Archana Stay | Patna PG Enquiries',
+    description:
+      'Contact Archana Stay about PG rooms in Patna. Call or WhatsApp to ask about room types, rent, availability and visiting S.K. Nagar.',
+  },
+  '/admin': {
+    title: 'Private Admin Preview | Archana Stay',
+    description: 'Private administration preview for Archana Stay.',
+  },
+};
+
+function setMeta(selector: string, attribute: 'name' | 'property', key: string, content: string) {
+  let element = document.head.querySelector<HTMLMetaElement>(selector);
+  if (!element) {
+    element = document.createElement('meta');
+    element.setAttribute(attribute, key);
+    document.head.append(element);
+  }
+  element.content = content;
+}
+
+function SEOHead() {
+  const [location] = useLocation();
+
+  useEffect(() => {
+    const pathname = location.split('?')[0].replace(/\/$/, '') || '/';
+    const page = pageMetadata[pathname];
+    const title = page?.title ?? 'Page Not Found | Archana Stay';
+    const description = page?.description ?? 'The requested Archana Stay page could not be found.';
+    const canonicalUrl = `${window.location.origin}${pathname}`;
+    const imageUrl = new URL('/assets/property-poster.png', window.location.origin).href;
+    const robots = pathname === '/admin' || !page ? 'noindex, nofollow' : 'index, follow';
+
+    document.title = title;
+    setMeta('meta[name="description"]', 'name', 'description', description);
+    setMeta('meta[name="robots"]', 'name', 'robots', robots);
+    setMeta('meta[property="og:title"]', 'property', 'og:title', title);
+    setMeta('meta[property="og:description"]', 'property', 'og:description', description);
+    setMeta('meta[property="og:url"]', 'property', 'og:url', canonicalUrl);
+    setMeta('meta[property="og:image"]', 'property', 'og:image', imageUrl);
+    setMeta('meta[name="twitter:title"]', 'name', 'twitter:title', title);
+    setMeta('meta[name="twitter:description"]', 'name', 'twitter:description', description);
+    setMeta('meta[name="twitter:image"]', 'name', 'twitter:image', imageUrl);
+
+    let canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.rel = 'canonical';
+      document.head.append(canonical);
+    }
+    canonical.href = canonicalUrl;
+
+    let schema = document.head.querySelector<HTMLScriptElement>('#page-structured-data');
+    if (!schema) {
+      schema = document.createElement('script');
+      schema.id = 'page-structured-data';
+      schema.type = 'application/ld+json';
+      document.head.append(schema);
+    }
+    schema.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      url: canonicalUrl,
+      name: title,
+      description,
+      inLanguage: 'en-IN',
+      about: { '@type': 'LodgingBusiness', name: 'Archana Stay' },
+    });
+  }, [location]);
+
+  return null;
+}
 
 type Property = {
   id: string;
@@ -304,7 +402,7 @@ function Home() {
           <div className="container hero-grid">
             <div className="reveal">
               <div className="eyebrow">A Rare Standard of Living in Patna</div>
-              <h1 data-testid="text-home-headline">Spacious rooms, attached balconies & cool AC <em>comfort.</em></h1>
+              <h1 data-testid="text-home-headline">PG rooms in Patna with space to <em>settle in.</em></h1>
               <p className="hero-intro" data-testid="text-home-intro">
                 Step into generously spacious, air-conditioned accommodations designed for peaceful living. Enjoy your own private attached balcony with breezy open ventilation — a rare luxury in Patna — paired with attentive everyday care and the freedom to truly settle in.
               </p>
@@ -418,6 +516,37 @@ function Home() {
             </div>
           </div>
         </section>
+
+        <section className="section map-section">
+          <div className="container map-layout">
+            <div className="map-copy">
+              <div className="eyebrow">Visit Archana Stay</div>
+              <h2 id="location-map-heading">Find us in Patna.</h2>
+              <p className="section-lede">
+                The map is centered on {locationLabel}. Open directions to let Google Maps start from your current location.
+              </p>
+              <a
+                href={mapDirectionsUrl}
+                className="button button-primary map-directions-button"
+                target="_blank"
+                rel="noreferrer"
+                data-testid="link-get-directions"
+              >
+                <MapPin size={16} /> Get Directions
+              </a>
+            </div>
+            <div className="map-card">
+              <iframe
+                src={mapEmbedUrl}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Archana Stay location on Google Maps"
+                data-testid="iframe-google-map"
+              />
+            </div>
+          </div>
+        </section>
       </main>
     </PageShell>
   );
@@ -444,7 +573,7 @@ function Listings() {
         <section className="page-header">
           <div className="container">
             <div className="eyebrow">Find your Patna base</div>
-            <h1 data-testid="text-listings-title">Stays with room<br />for your life.</h1>
+            <h1 data-testid="text-listings-title">PG rooms in Patna, with room for your life.</h1>
             <p>Browse clear, contact-first listings for people moving to Patna. No guesswork around pricing or availability — just a direct conversation when you are ready.</p>
           </div>
         </section>
@@ -492,7 +621,7 @@ function PropertyDetail() {
             </div>
             <div className="detail-info">
               <div className="eyebrow">Owner-managed in Patna</div>
-              <h1 data-testid="text-detail-title">{property.name}</h1>
+              <h1 data-testid="text-detail-title">{property.name} in Patna</h1>
               <div className="property-location" data-testid="text-detail-location"><MapPin size={16} /> {property.location}</div>
               <p className="section-lede">{property.description}</p>
               <div className="status-note" data-testid="status-contact-pricing">
@@ -707,6 +836,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
+          <SEOHead />
           <Router />
         </WouterRouter>
         <Toaster />
