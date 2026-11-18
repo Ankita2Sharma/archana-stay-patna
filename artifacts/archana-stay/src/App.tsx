@@ -40,10 +40,28 @@ const ownerAlternatePhone = '9504622099';
 const rajuPhone = '7654009789';
 const propertyImage = '/assets/d6e31053-42d1-48bf-a0f5-46f13277269b.png';
 const whatsappIcon = '/favicon icon whatsapp.jpg';
-const locationCoordinates = '25.6156875,85.1286875';
+const propertyCoordinates = { latitude: 25.6156875, longitude: 85.1286875 };
+const locationCoordinates = `${propertyCoordinates.latitude},${propertyCoordinates.longitude}`;
 const locationLabel = 'J48H+7F, Patna, Bihar';
 const mapEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(locationCoordinates)}&z=17&output=embed`;
 const mapDirectionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(locationCoordinates)}&travelmode=driving`;
+const landmarks = [
+  { name: 'Boring Road Chauraha', latitude: 25.61258, longitude: 85.11873 },
+  { name: 'Goal Coaching (Buddha Colony)', latitude: 25.6206913, longitude: 85.1282653 },
+  { name: 'PhysicsWallah Coaching Institute (Boring Road)', latitude: 25.6106037, longitude: 85.11773 },
+  { name: 'Patna Junction Railway Station', latitude: 25.6032108, longitude: 85.1376861 },
+];
+
+function distanceToLandmark(latitude: number, longitude: number) {
+  const toRadians = (degrees: number) => (degrees * Math.PI) / 180;
+  const latitudeDifference = toRadians(latitude - propertyCoordinates.latitude);
+  const longitudeDifference = toRadians(longitude - propertyCoordinates.longitude);
+  const haversine = Math.sin(latitudeDifference / 2) ** 2
+    + Math.cos(toRadians(propertyCoordinates.latitude)) * Math.cos(toRadians(latitude))
+    * Math.sin(longitudeDifference / 2) ** 2;
+
+  return (6371 * 2 * Math.asin(Math.sqrt(haversine))).toFixed(1);
+}
 
 const pageMetadata: Record<string, { title: string; description: string }> = {
   '/': {
@@ -515,6 +533,19 @@ function Home() {
               <p className="section-lede">
                 The map is centered on {locationLabel}. Open directions to let Google Maps start from your current location.
               </p>
+              <p className="map-coordinates">GPS: {propertyCoordinates.latitude}, {propertyCoordinates.longitude}</p>
+              <div className="map-landmarks">
+                <span className="map-landmarks-title">Distance to Prime Landmarks</span>
+                <ul className="map-landmarks-list">
+                  {landmarks.map(({ name, latitude, longitude }) => (
+                    <li className="map-landmark-item" key={name}>
+                      <span>{name}</span>
+                      <strong>~{distanceToLandmark(latitude, longitude)} km</strong>
+                    </li>
+                  ))}
+                </ul>
+                <p className="map-distance-note">Approximate straight-line distances from the GPS point; road routes are longer. PhysicsWallah uses the Boring Road branch area.</p>
+              </div>
               <a
                 href={mapDirectionsUrl}
                 className="button button-primary map-directions-button"
