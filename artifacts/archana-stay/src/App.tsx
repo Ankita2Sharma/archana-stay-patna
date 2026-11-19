@@ -35,8 +35,8 @@ import { TooltipProvider } from '@workspace/archana-stay-design-system/component
 import NotFound from '@/pages/not-found';
 
 const queryClient = new QueryClient();
-const phone = '7991144192';
-const ownerAlternatePhone = '9504622099';
+const phone = '9504622099';
+const ownerAlternatePhone = '7991144192';
 const rajuPhone = '7654009789';
 const propertyImage = '/assets/d6e31053-42d1-48bf-a0f5-46f13277269b.png';
 const whatsappIcon = '/favicon icon whatsapp.jpg';
@@ -46,9 +46,11 @@ const locationLabel = 'J48H+7F, Patna, Bihar';
 const mapEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(locationCoordinates)}&z=17&output=embed`;
 const mapDirectionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(locationCoordinates)}&travelmode=driving`;
 const landmarks = [
+  { name: 'Income Tax Chauraha', latitude: 25.61099, longitude: 85.13019 },
   { name: 'Boring Road Chauraha', latitude: 25.61258, longitude: 85.11873 },
   { name: 'Goal Coaching (Buddha Colony)', latitude: 25.6206913, longitude: 85.1282653 },
   { name: 'PhysicsWallah Coaching Institute (Boring Road)', latitude: 25.6106037, longitude: 85.11773 },
+  { name: 'Panchmukhi Hanuman Mandir (Boring Canal Road)', latitude: 25.61801, longitude: 85.12183 },
   { name: 'Patna Junction Railway Station', latitude: 25.6032108, longitude: 85.1376861 },
 ];
 
@@ -419,6 +421,9 @@ function Home() {
               <p className="hero-intro" data-testid="text-home-intro">
                 Step into generously spacious, air-conditioned accommodations designed for peaceful living. Enjoy your own private attached balcony with breezy open ventilation — a rare luxury in Patna — paired with attentive everyday care and the freedom to truly settle in.
               </p>
+              <p className="hero-intro mt-3">
+                <em>Accommodation for 10 to 12 people groups also available during wedding season</em>
+              </p>
               <div className="hero-cta">
                 <Link className="button button-primary" href="/listings" data-testid="link-hero-find-stay">
                   Explore stays <ArrowRight size={16} />
@@ -666,7 +671,7 @@ function PropertyDetail() {
                 <h3>Speak with us directly.</h3>
                 <div className="contact-person" data-testid="contact-primary-phone">
                   <div className="person-initial"><Phone size={16} /></div>
-                  <div><strong>Primary Contact</strong><span>7991144192 / 9504622099 · Room & pricing enquiries</span></div>
+                  <div><strong>Primary Contact</strong><span>{phone} / {ownerAlternatePhone} · Room & pricing enquiries</span></div>
                   <div className="person-actions">
                     <a className="icon-action" href={`tel:${phone}`} aria-label="Call primary contact" data-testid="link-call-primary"><Phone size={15} /></a>
                     <a className="icon-action" href={`tel:${ownerAlternatePhone}`} aria-label="Call alternate contact" data-testid="link-call-alternate"><Phone size={15} /></a>
@@ -759,8 +764,8 @@ function Contact() {
             <h1 data-testid="text-contact-title">One good question can change the search.</h1>
             <p className="section-lede">Tell us a little about your move. We will help you figure out the next useful step — whether that is a visit, a call, or a better question to ask.</p>
             <div className="contact-links">
-              <a className="contact-link" href={`tel:${phone}`} data-testid="link-contact-primary"><span className="link-icon"><Phone size={16} /></span><span><strong>Primary Phone</strong><br /><span className="muted">7991144192 · Calls & enquiries</span></span></a>
-              <a className="contact-link" href={`tel:${ownerAlternatePhone}`} data-testid="link-contact-alternate"><span className="link-icon"><Phone size={16} /></span><span><strong>Alternate Phone</strong><br /><span className="muted">9504622099 · Direct line</span></span></a>
+              <a className="contact-link" href={`tel:${phone}`} data-testid="link-contact-primary"><span className="link-icon"><Phone size={16} /></span><span><strong>Primary Phone</strong><br /><span className="muted">{phone} · Calls & enquiries</span></span></a>
+              <a className="contact-link" href={`tel:${ownerAlternatePhone}`} data-testid="link-contact-alternate"><span className="link-icon"><Phone size={16} /></span><span><strong>Alternate Phone</strong><br /><span className="muted">{ownerAlternatePhone} · Direct line</span></span></a>
               <a className="contact-link" href={`tel:${rajuPhone}`} data-testid="link-contact-helpdesk"><span className="link-icon"><Phone size={16} /></span><span><strong>Helpdesk / Support</strong><br /><span className="muted">7654009789 · Additional contact</span></span></a>
               <a className="contact-link" href={`https://wa.me/91${phone}`} target="_blank" rel="noreferrer" data-testid="link-contact-whatsapp"><span className="link-icon"><img src={whatsappIcon} alt="WhatsApp" className="whatsapp-icon-img" /></span><span><strong>WhatsApp</strong><br /><span className="muted">A quick way to ask about a room</span></span></a>
             </div>
@@ -794,7 +799,7 @@ function PageShell({ children }: { children: ReactNode }) {
               <p>A calm, clear way to find your room in Patna — and the people who will help you settle in.</p>
             </div>
             <div><h4>Explore</h4><div className="footer-links"><Link href="/" data-testid="link-footer-home">Home</Link><Link href="/listings" data-testid="link-footer-listings">Find a stay</Link><Link href="/about" data-testid="link-footer-about">Our approach</Link></div></div>
-            <div><h4>Talk to us</h4><div className="footer-links"><a href={`tel:${phone}`} data-testid="link-footer-call">7991144192</a><a href={`tel:${ownerAlternatePhone}`} data-testid="link-footer-owner-alternate">9504622099</a><Link href="/contact" data-testid="link-footer-contact">Send an enquiry</Link></div></div>
+            <div><h4>Talk to us</h4><div className="footer-links"><a href={`tel:${phone}`} data-testid="link-footer-call">{phone}</a><a href={`tel:${ownerAlternatePhone}`} data-testid="link-footer-owner-alternate">{ownerAlternatePhone}</a><Link href="/contact" data-testid="link-footer-contact">Send an enquiry</Link></div></div>
           </div>
           <div className="footer-bottom"><span>© 2025 Archana Stay · Patna</span><span>Details first. Human always.</span></div>
         </div>
